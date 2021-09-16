@@ -1,0 +1,112 @@
+{
+	"name": "DMP_Scenerio_Pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Scenerio_Testing",
+				"type": "IfCondition",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(pipeline().parameters.DedupKeys,' ')",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "DeltaLoadNotebook",
+							"type": "DatabricksNotebook",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Users/prassinghal@deloitte.com/DeltaLoad_Testing",
+								"baseParameters": {
+									"RawPath": {
+										"value": "@pipeline().parameters.RawPath",
+										"type": "Expression"
+									},
+									"Source": {
+										"value": "@pipeline().parameters.Source",
+										"type": "Expression"
+									},
+									"DatasetName": {
+										"value": "@pipeline().parameters.DatasetName",
+										"type": "Expression"
+									},
+									"DedupKeys": {
+										"value": "@pipeline().parameters.DedupKeys",
+										"type": "Expression"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureDatabricks",
+								"type": "LinkedServiceReference"
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "FullLoadNotebook",
+							"type": "DatabricksNotebook",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Users/prassinghal@deloitte.com/FullLoad_Testing",
+								"baseParameters": {
+									"RawPath": {
+										"value": "@pipeline().parameters.RawPath",
+										"type": "Expression"
+									},
+									"Source": {
+										"value": "@pipeline().parameters.Source",
+										"type": "Expression"
+									},
+									"DatasetName": {
+										"value": "@pipeline().parameters.DatasetName",
+										"type": "Expression"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureDatabricks",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"RawPath": {
+				"type": "string"
+			},
+			"Source": {
+				"type": "string"
+			},
+			"DatasetName": {
+				"type": "string"
+			},
+			"DedupKeys": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-09-16T05:33:21Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

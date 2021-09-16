@@ -1,0 +1,9 @@
+{
+	"name": "adflog",
+	"location": "eastus2",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "c9097eaf-5ca2-4b7d-87dc-a17dece5e796",
+		"tenantId": "36da45f1-dd2c-4d1f-af13-5abe46b99921"
+	}
+}
