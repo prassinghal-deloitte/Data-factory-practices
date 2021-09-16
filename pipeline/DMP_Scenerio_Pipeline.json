@@ -9,7 +9,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(pipeline().parameters.DedupKeys,empty(''))",
+						"value": "@equals(pipeline().parameters.DedupKeys,null)",
 						"type": "Expression"
 					},
 					"ifFalseActivities": [
